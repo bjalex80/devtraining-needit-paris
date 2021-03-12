@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic">
+    <sys_cb_topic action="INSERT_OR_UPDATE">
+        <applicability/>
+        <category display_value="Virtual Agent topics for the NeedIt Virtual Agent Conversations application">ac4efd082f0620102296811df699b62a</category>
+        <channels/>
+        <connect_queue/>
+        <description>Topic to launch an external chat application</description>
+        <flexible_conversation_switching>false</flexible_conversation_switching>
+        <graph>{
+  "graph_api_version": "1.0.21",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "beecce78b9704b3a805ae60ea4c58b90": {
+          "id": "beecce78b9704b3a805ae60ea4c58b90",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "a67cea7685004a0db12077297446a8da": {
+          "id": "a67cea7685004a0db12077297446a8da",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "mode": "simple",
+            "value": ""
+          }
+        },
+        "9df6c7df810f4d8c9f081a5de70dec1c": {
+          "id": "9df6c7df810f4d8c9f081a5de70dec1c",
+          "name": "Lookup Interaction",
+          "script": "(function execute() {\n    /* Code your scripted action here. For example, you might update a\n       record based on conditional logic:\n\n        if (vaVars.my_flag == 'say hello') {\n            gs.info('hi there');\n        } else {\n            gs.info('bye now');\n        }\n    */\n    var sysId = vaVars._interaction_record_sysid;\n    var grInt = new GlideRecord(\"interaction\");\n    grInt.addQuery(\"sys_id\", sysId);\n    grInt.query();\n    if (grInt.next()) {\n        var recNum = grInt.getValue(\"number\");\n        vaVars.interaction_number = recNum;\n        vaVars.chat_external_url = \"http://www.google.com/search?q=\" + recNum;\n    }\n})()\n",
+          "stepType": "ScriptAction",
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "5a77b61caeae475f8686b9b10582463c": {
+          "id": "5a77b61caeae475f8686b9b10582463c",
+          "stepType": "LinkOutput",
+          "name": "Provide Chat Link",
+          "url": {
+            "value": "(function execute() {\n    return vaVars.chat_external_url;\n})()\n",
+            "mode": "script"
+          },
+          "label": {
+            "value": "Click Here to Chat",
+            "mode": "simple"
+          },
+          "header": {
+            "value": "(function execute() {\n\n    return 'Please reference interaction ' + vaVars.interaction_number;\n\n})()\n",
+            "mode": "script"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "linkType": "single",
+          "introMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "listOfLinks": ""
+        }
+      },
+      "edges": [
+        {
+          "id": "da2d8fe7137d461da9bb8b8e7cae791a",
+          "edgeType": "Edge",
+          "source": "beecce78b9704b3a805ae60ea4c58b90",
+          "target": "9df6c7df810f4d8c9f081a5de70dec1c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "23041f05842346c8af5e82f4406f1868",
+          "edgeType": "Edge",
+          "source": "9df6c7df810f4d8c9f081a5de70dec1c",
+          "target": "5a77b61caeae475f8686b9b10582463c",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "1ab275620bca4856a0291029e7a0cf4d",
+          "edgeType": "Edge",
+          "source": "5a77b61caeae475f8686b9b10582463c",
+          "target": "a67cea7685004a0db12077297446a8da",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "current-user": {
+      "category": "vaInputs",
+      "id": "current-user",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "a63e5e0222ef4ad487ffb1b2f5c13bb2": {
+      "id": "a63e5e0222ef4ad487ffb1b2f5c13bb2",
+      "value": {
+        "value": "",
+        "mode": "simple"
+      },
+      "name": "interaction_number",
+      "label": "interaction_number",
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "fa7725ac127a43d097e3766072bb07d4": {
+      "id": "fa7725ac127a43d097e3766072bb07d4",
+      "value": {
+        "mode": "simple",
+        "value": "https://www.google.com"
+      },
+      "name": "chat_external_url",
+      "label": "chat_external_url",
+      "varType": "script",
+      "category": "vaVars"
+    }
+  }
+}</graph>
+        <key_phrases>representative,rep,person</key_phrases>
+        <library>false</library>
+        <live_agent>false</live_agent>
+        <name>Contact a Representative</name>
+        <nlu_intent/>
+        <nlu_intent_label/>
+        <nlu_model/>
+        <nlu_model_label/>
+        <nlu_provider/>
+        <roles/>
+        <source_topic_id/>
+        <sys_class_name>sys_cb_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-11 18:36:18</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>61ec6fc22f3220102296811df699b6aa</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Contact a Representative</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_cb_topic_61ec6fc22f3220102296811df699b6aa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-11 20:00:16</sys_updated_on>
+        <type>STANDARD</type>
+        <variables/>
+    </sys_cb_topic>
+    <sys_variable_value action="delete_multiple" query="document_key=61ec6fc22f3220102296811df699b6aa"/>
+</record_update>
